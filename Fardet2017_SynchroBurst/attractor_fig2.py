@@ -16,7 +16,7 @@ plt.rcParams['axes.grid'] = False
 import numpy as np
 from scipy.signal import argrelmax, argrelmin
 
-from ActivStudy.bursting import TheoreticalModel, Simulator
+from PyNeurActiv.models import Fardet2017_SynchroBurst, Simulator_SynchroBurst
 from tools_burst_cycles import get_data
 
 
@@ -47,6 +47,7 @@ omp = 10                  # number of OpenMP threads
 simtime = chosen_interval[1]*(3*di_param["tau_w"]) # duration of the simulation
 resolution = 0.1          # time resolution for the simulation
 num_avg = 2               # number of realizations to compute average and std
+                          # (increase to get a plot like the one in the paper)
 
 # PLOT
 V_samples = 200           # number of samples for the histogram along V
@@ -155,7 +156,8 @@ if __name__ == "__main__":
             # generate the graph
             net = nngt.generate(instructions, population=pop, weights=w_prop)
             # run the simulation and record the mean-field behaviour
-            testSim = Simulator(net, resolution=resolution, omp=omp)
+            testSim = Simulator_SynchroBurst.from_nngt_network(
+                net, resolution=resolution, omp=omp)
             resultsSim = testSim.compute_properties(
                 simtime=simtime, steady_state=burst_start)
             Vs, ws = get_data(
@@ -174,7 +176,8 @@ if __name__ == "__main__":
                 net = nngt.generate(
                     instructions, population=pop, weights=w_prop)
                 # run the simulation and record the mean-field behaviour
-                testSim = Simulator(net, omp=omp)
+                testSim = Simulator_SynchroBurst.from_nngt_network(
+                    net, omp=omp)
                 resultsSim = testSim.compute_properties(
                     simtime=simtime, steady_state=burst_start)
                 Vs, ws = get_data(
@@ -253,7 +256,7 @@ if __name__ == "__main__":
     di_param["delay"] = delay
     di_param["avg_deg"] = avg_deg
     di_param["weight"] = w_prop["value"]
-    theo = TheoreticalModel(di_param)
+    theo = Fardet2017_SynchroBurst(di_param)
     Vs2 = np.linspace(1.05*V_min, 0.95*Vth, 1000)
     ws2 = theo.w_recover_lin(Vs2)
     ax.plot(Vs2, ws2, c="k", linestyle=":")

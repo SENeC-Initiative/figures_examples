@@ -13,7 +13,7 @@ import numpy as np
 from scipy.signal import argrelmax
 
 import nest
-from pyneuractiv.models import Fardet2017_SynchroBurst, Simulator_SynchroBurst
+from PyNeurActiv.models import Fardet2017_SynchroBurst, Simulator_SynchroBurst
 
 
 '''

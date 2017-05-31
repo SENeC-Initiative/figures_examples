@@ -6,7 +6,7 @@
 import nest
 import numpy as np
 
-from ActivStudy.analysis import find_idx_nearest
+from PyNeurActiv.analysis import find_idx_nearest
 
 
 '''
