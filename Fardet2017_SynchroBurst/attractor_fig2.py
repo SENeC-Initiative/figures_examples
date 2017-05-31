@@ -47,6 +47,7 @@ omp = 10                  # number of OpenMP threads
 simtime = chosen_interval[1]*(3*di_param["tau_w"]) # duration of the simulation
 resolution = 0.1          # time resolution for the simulation
 num_avg = 2               # number of realizations to compute average and std
+                          # (increase to get a plot like the one in the paper)
 
 # PLOT
 V_samples = 200           # number of samples for the histogram along V
